@@ -46,7 +46,7 @@ class GetFilesAndDirs:
             'files': list_of_files,
         }
 
-    def get_file_(self, string):
+    def get_file_(self, string: str):
 
         pattern = r'((\.|\w)*%s(\w)*.*)' % self.name_to_find
         find_match = re.findall(pattern, string)
