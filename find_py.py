@@ -38,7 +38,7 @@ class GetFilesAndDirs:
             path = self.get_full_path(self.string_path, item)
             if os.path.isdir(path):
                 self.list_of_dirs.append(path)
-            elif os.path.isfile(item):
+            elif os.path.isfile(path):
                 list_of_files.append(item)
 
         return {
