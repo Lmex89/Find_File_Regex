@@ -80,8 +80,8 @@ class TreeFile:
         """
     def __init__(self, get_files_and_dirs: GetFilesAndDirs, level: int = None):
         self._instance_ = get_files_and_dirs
-        self.level = level if level is None else 3
-        self._first_level = 0
+        self.level = level if level is not None else 3
+        self._first_level = 1
         self.all_matches = []
 
     def _main_(self):
@@ -96,8 +96,10 @@ class TreeFile:
         while flag:
             if len(dirs) == 0:
                 flag = False
+                break
             if self._first_level > self.level:
                 flag = False
+                return self.all_matches
             total_dirs = []
             for dir in dirs:
                 instance = GetFilesAndDirs(dir, name_to_find)
@@ -109,7 +111,6 @@ class TreeFile:
                 if result.get('dirs'):
                     for dir in result.get('dirs'):
                         total_dirs.append(dir)
-                    self._first_level += 1
             if total_dirs:
                 dirs = total_dirs
             self._first_level += 1
@@ -126,7 +127,7 @@ else:
     os.chdir(path)
     retval = os.getcwd()
     regex = GetFilesAndDirs(path, string_to_find)
-    treenode = TreeFile(regex, level=3)
+    treenode = TreeFile(regex, level=4)
     result = treenode._main_()
     for r in result:
         print(r)
